@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - SecureBlog</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .register-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .register-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 50px;
+            max-width: 550px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .register-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .register-header h1 {
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        
+        .register-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .form-control {
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            padding: 15px 20px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            background: white;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .btn-register {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+        
+        .btn-login-link {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+            border-radius: 12px;
+            padding: 12px 30px;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-login-link:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e1e5e9;
+        }
+        
+        .divider span {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0 20px;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .alert {
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: none;
+            padding: 15px 20px;
+        }
+        
+        .alert-danger {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+        
+        .alert-success {
+            background: linear-gradient(135deg, #51cf66, #69db7c);
+            color: white;
+        }
+        
+        .input-group {
+            position: relative;
+        }
+        
+        .input-group-text {
+            background: transparent;
+            border: 2px solid #e1e5e9;
+            border-right: none;
+            border-radius: 12px 0 0 12px;
+            color: #666;
+        }
+        
+        .input-group .form-control {
+            border-left: none;
+            border-radius: 0 12px 12px 0;
+        }
+        
+        .input-group:focus-within .input-group-text {
+            border-color: #667eea;
+        }
+        
+        .password-strength {
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .password-strength .strength-bar {
+            height: 4px;
+            background: #e1e5e9;
+            border-radius: 2px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+        
+        .password-strength .strength-fill {
+            height: 100%;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .strength-weak { background: #ff6b6b; width: 25%; }
+        .strength-fair { background: #ffa726; width: 50%; }
+        .strength-good { background: #42a5f5; width: 75%; }
+        .strength-strong { background: #66bb6a; width: 100%; }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .terms-checkbox {
+            margin: 25px 0;
+        }
+        
+        .terms-checkbox .form-check-input {
+            margin-top: 0.25rem;
+        }
+        
+        .terms-checkbox .form-check-label {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        .terms-checkbox .form-check-label a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .terms-checkbox .form-check-label a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 576px) {
+            .register-card {
+                padding: 30px 25px;
+                margin: 10px;
+            }
+            
+            .register-header h1 {
+                font-size: 2rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-card">
+            <div class="register-header">
+                <h1><i class="fas fa-user-plus"></i> Join SecureBlog</h1>
+                <p>Create your account and start sharing your thoughts</p>
+            </div>
+            
+            {% if form.errors or form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Please correct the errors below.
+                    <ul class="mb-0 mt-2">
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <li>{{ field|capfirst }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            
+            <form method="post" id="registerForm">
+                {% csrf_token %}
+                
+                <div class="form-row mb-4">
+                    <div class="form-group">
+                        <label for="{{ form.first_name.id_for_label }}" class="form-label">
+                            <i class="fas fa-user me-2"></i>First Name
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <input type="text" 
+                                   class="form-control {% if form.first_name.errors %}is-invalid{% endif %}" 
+                                   id="{{ form.first_name.id_for_label }}"
+                                   name="{{ form.first_name.name }}" 
+                                   value="{{ form.first_name.value|default:'' }}"
+                                   placeholder="First name"
+                                   required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.last_name.id_for_label }}" class="form-label">
+                            <i class="fas fa-user me-2"></i>Last Name
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <input type="text" 
+                                   class="form-control {% if form.last_name.errors %}is-invalid{% endif %}" 
+                                   id="{{ form.last_name.id_for_label }}"
+                                   name="{{ form.last_name.name }}" 
+                                   value="{{ form.last_name.value|default:'' }}"
+                                   placeholder="Last name"
+                                   required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="{{ form.username.id_for_label }}" class="form-label">
+                        <i class="fas fa-at me-2"></i>Username
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <input type="password" 
+                               class="form-control {% if form.password1.errors %}is-invalid{% endif %}" 
+                               id="{{ form.password1.id_for_label }}"
+                               name="{{ form.password1.name }}"
+                               placeholder="Create a strong password"
+                               required>
+                    </div>
+                    <div class="password-strength" id="passwordStrength" style="display: none;">
+                        <small class="strength-text">Password strength: <span id="strengthText">Weak</span></small>
+                        <div class="strength-bar">
+                            <div class="strength-fill" id="strengthFill"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="{{ form.password2.id_for_label }}" class="form-label">
+                        <i class="fas fa-lock me-2"></i>Confirm Password
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <input type="password" 
+                               class="form-control {% if form.password2.errors %}is-invalid{% endif %}" 
+                               id="{{ form.password2.id_for_label }}"
+                               name="{{ form.password2.name }}"
+                               placeholder="Confirm your password"
+                               required>
+                    </div>
+                </div>
+                
+                <div class="terms-checkbox">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                        <label class="form-check-label" for="agreeTerms">
+                            I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a>
+                        </label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-register" id="submitBtn" disabled>
+                    <i class="fas fa-user-plus me-2"></i>Create Account
+                </button>
+            </form>
+            
+            <div class="divider">
+                <span>Already have an account?</span>
+            </div>
+            
+            <a href="{% url 'login' %}" class="btn btn-login-link">
+                <i class="fas fa-sign-in-alt me-2"></i>Sign In Instead
+            </a>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const card = document.querySelector('.register-card');
+            const inputs = document.querySelectorAll('.form-control');
+            const passwordInput = document.getElementById('{{ form.password1.id_for_label }}');
+            const confirmPasswordInput = document.getElementById('{{ form.password2.id_for_label }}');
+            const strengthIndicator = document.getElementById('passwordStrength');
+            const strengthFill = document.getElementById('strengthFill');
+            const strengthText = document.getElementById('strengthText');
+            const termsCheckbox = document.getElementById('agreeTerms');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Add focus animations
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'translateY(-2px)';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'translateY(0)';
+                });
+            });
+            
+            // Password strength checker
+            function checkPasswordStrength(password) {
+                let score = 0;
+                let feedback = [];
+                
+                if (password.length >= 8) score += 1;
+                else feedback.push('At least 8 characters');
+                
+                if (/[a-z]/.test(password)) score += 1;
+                else feedback.push('Lowercase letter');
+                
+                if (/[A-Z]/.test(password)) score += 1;
+                else feedback.push('Uppercase letter');
+                
+                if (/[0-9]/.test(password)) score += 1;
+                else feedback.push('Number');
+                
+                if (/[^A-Za-z0-9]/.test(password)) score += 1;
+                else feedback.push('Special character');
+                
+                return { score, feedback };
+            }
+            
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                
+                if (password.length === 0) {
+                    strengthIndicator.style.display = 'none';
+                    return;
+                }
+                
+                strengthIndicator.style.display = 'block';
+                const { score } = checkPasswordStrength(password);
+                
+                // Remove existing classes
+                strengthFill.className = 'strength-fill';
+                
+                if (score <= 2) {
+                    strengthFill.classList.add('strength-weak');
+                    strengthText.textContent = 'Weak';
+                    strengthText.style.color = '#ff6b6b';
+                } else if (score === 3) {
+                    strengthFill.classList.add('strength-fair');
+                    strengthText.textContent = 'Fair';
+                    strengthText.style.color = '#ffa726';
+                } else if (score === 4) {
+                    strengthFill.classList.add('strength-good');
+                    strengthText.textContent = 'Good';
+                    strengthText.style.color = '#42a5f5';
+                } else {
+                    strengthFill.classList.add('strength-strong');
+                    strengthText.textContent = 'Strong';
+                    strengthText.style.color = '#66bb6a';
+                }
+            });
+            
+            // Password confirmation checker
+            function checkPasswordMatch() {
+                const password = passwordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+                
+                if (confirmPassword && password !== confirmPassword) {
+                    confirmPasswordInput.setCustomValidity('Passwords do not match');
+                    confirmPasswordInput.classList.add('is-invalid');
+                } else {
+                    confirmPasswordInput.setCustomValidity('');
+                    confirmPasswordInput.classList.remove('is-invalid');
+                }
+            }
+            
+            confirmPasswordInput.addEventListener('input', checkPasswordMatch);
+            passwordInput.addEventListener('input', checkPasswordMatch);
+            
+            // Enable/disable submit button based on terms checkbox
+            termsCheckbox.addEventListener('change', function() {
+                submitBtn.disabled = !this.checked;
+            });
+            
+            // Add card entrance animation
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            
+            setTimeout(() => {
+                card.style.transition = 'all 0.6s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 100);
+            
+            // Form validation on submit
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                const { score } = checkPasswordStrength(passwordInput.value);
+                
+                if (score < 3) {
+                    e.preventDefault();
+                    alert('Please choose a stronger password. Your password should include uppercase and lowercase letters, numbers, and special characters.');
+                    return false;
+                }
+                
+                if (passwordInput.value !== confirmPasswordInput.value) {
+                    e.preventDefault();
+                    alert('Passwords do not match. Please check your password confirmation.');
+                    return false;
+                }
+                
+                if (!termsCheckbox.checked) {
+                    e.preventDefault();
+                    alert('Please agree to the Terms of Service and Privacy Policy to continue.');
+                    return false;
+                }
+            });
+        });
+    </script>
+</body>
+</html> class="fas fa-at"></i>
+                        </span>
+                        <input type="text" 
+                               class="form-control {% if form.username.errors %}is-invalid{% endif %}" 
+                               id="{{ form.username.id_for_label }}"
+                               name="{{ form.username.name }}" 
+                               value="{{ form.username.value|default:'' }}"
+                               placeholder="Choose a unique username"
+                               required>
+                    </div>
+                    <small class="text-muted">This will be your public display name.</small>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="{{ form.email.id_for_label }}" class="form-label">
+                        <i class="fas fa-envelope me-2"></i>Email Address
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                        <input type="email" 
+                               class="form-control {% if form.email.errors %}is-invalid{% endif %}" 
+                               id="{{ form.email.id_for_label }}"
+                               name="{{ form.email.name }}" 
+                               value="{{ form.email.value|default:'' }}"
+                               placeholder="your.email@example.com"
+                               required>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="{{ form.password1.id_for_label }}" class="form-label">
+                        <i class="fas fa-lock me-2"></i>Password
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i
